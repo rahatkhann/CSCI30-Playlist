@@ -19,11 +19,10 @@ void play() const override {
          << getTitle()
          << " by "
          << getArtist()
-         << endl;
-
-    cout << " from the album "
+         << " [Album: "
          << albumName
-         << "."
+         << "]"
          << endl;
+    playBuffer();
 }
 };

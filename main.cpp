@@ -3,38 +3,26 @@
 #include "Podcast.h"
 #include <iostream>
 #include <stdexcept>
+#include "Song.h"
+#include "Podcast.h"
+
+using namespace std;
 
 int main() {
     Playlist myPlaylist;
 
     // Direct heap allocation passed to the Playlist
-    myPlaylist.addStream(new Song("Starman", "David Bowie", 250, "Ziggy Stardust"));
-    myPlaylist.addStream(new Song("Bohemian Rhapsody", "Queen", 354, "A night at the Opera"));
-    myPlaylist.addStream(new Song("Hotel California", "Eagles", 391, "Hotel California"));
-    myPlaylist.addStream(new Song("Blinding Lights", "The Weeknd", 200, "After Hours"));
-    myPlaylist.addStream(new Podcast("The Daily", "Michael Barbaro", 1800, 1024, "NYT Staff"));
-    myPlaylist.addStream(new Podcast("Tech Overload", "Arun Maini", 1200, 45, "Tim Cook"));
+    myPlaylist.addSong("Starman", "David Bowie", 250, "Ziggy Stardust");
+    myPlaylist.addSong("Bohemian Rhapsody", "Queen", 354, "A Night at the Opera");
+    myPlaylist.addSong("Hotel California", "Eagles", 391, "Hotel California");
+    myPlaylist.addSong("Blinding Lights", "The Weeknd", 200, "After Hours");
+    myPlaylist.addPodcast("The Daily", "Michael Barbaro", 1800, 1024, "NYT Staff");
+    myPlaylist.addPodcast("Tech Overload", "Arun Maini", 1200, 45, "Tim Cook");
 
     int idx1, idx2;
 
     myPlaylist.showPlaylist();
-
-    cout << "\nEnter two indices to swap: ";
-    cin >> idx1 >> idx2;
-
-    cout << "\nAttempting to swap index " << idx1 << " and " << idx2 << "..." << endl;
-
-    try {
-        myPlaylist.swapSongs(idx1, idx2);
-        cout << endl;
-        myPlaylist.showPlaylist();
-    }
-    catch (range_error& e) {
-        cout << e.what() << endl;
-    }
-    catch (logic_error& e) {
-        cout << e.what() << endl;
-    }
+    myPlaylist.playAll();
 
     return 0; // Playlist destructor handles memory cleanup
 }

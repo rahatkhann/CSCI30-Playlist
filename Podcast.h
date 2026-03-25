@@ -20,15 +20,14 @@ public:
 void play() const override {
     cout << "Now playing Podcast: "
          << getTitle()
-         << endl;
-
-    cout << " Episode #"
+         << " Ep #"
          << episodeNumber
-         << ", featuring"
-         << endl
-         << " "
+         << " (Host: "
+         << getArtist()
+         << ", Guest: "
          << guest
-         << "."
+         << ")"
          << endl;
+    playBuffer();
 }
 };

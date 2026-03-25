@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <string>
+#include "supportFunctions.h"
+#include "AudioBuffer.h"
 
 using namespace std;
 
@@ -10,16 +12,24 @@ private:
     string title;
     string artist;
     int duration;
+    AudioBuffer audioBuffer;
 
 public:
-    AudioStream(string tit, string art, int dur)
-        : title(tit), artist(art), duration(dur) {}
+    AudioStream(string tit, string art, int dur) : title(tit), artist(art), duration(dur), audioBuffer(dur, tit){
+    
+    }
 
-    virtual ~AudioStream() {}
+    virtual ~AudioStream() {
+
+    }
 
     string getTitle() const { return title; }
     string getArtist() const { return artist; }
     int getDuration() const { return duration; }
+
+    void playBuffer() const {
+        audioBuffer.play();
+    }
 
     void print() const {
         cout << "The stream \"" << title

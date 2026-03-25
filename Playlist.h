@@ -3,6 +3,8 @@
 #include <iostream>
 #include "AudioStream.h"
 #include <stdexcept>
+#include "Song.h"
+#include "Podcast.h"
 
 using namespace std;
 
@@ -21,6 +23,24 @@ public:
     ~Playlist() {
         for (int i = 0; i < m_count; i++) {
             delete m_list[i];
+        }
+    }
+
+    void addSong(string title, string artist, int duration, string album) {
+        cout << "Adding Song: " << title << "..." << endl;
+        try {
+            addStream(new Song(title, artist, duration, album));
+        } catch (runtime_error& e){
+            cout << "  [Playlist]: Failed to add " << title << " -> " << e.what() << endl;
+        }
+    }
+
+    void addPodcast(string title, string host, int duration, int episode, string guest) {
+        cout << "Adding Podcast: " << title << "..." << endl;
+        try {
+            addStream(new Podcast(title, host, duration, episode, guest));
+        } catch (runtime_error& e){
+            cout << "  [Playlist]: Failed to add " << title << " -> " << e.what() << endl;
         }
     }
 
