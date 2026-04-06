@@ -20,7 +20,7 @@ public:
     }
 
     virtual ~AudioStream() {
-
+        cout << "Destroying the AudioStream :" << title << endl;
     }
 
     string getTitle() const { return title; }

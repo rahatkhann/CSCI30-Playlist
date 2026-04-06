@@ -17,6 +17,7 @@ public:
     }
 
     ~AudioBuffer() {
+        cout << "Destroying the AudioBuffer" << endl;
         if (data != nullptr) {
             freeAudioResource(data);
         }

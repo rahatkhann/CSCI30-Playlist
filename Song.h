@@ -3,26 +3,28 @@
 #include <iostream>
 #include <string>
 #include "AudioStream.h"
+#include <memory>
+// #include "Album.h"
+
+class Album;
 
 using namespace std;
 
 class Song : public AudioStream {
 private:
-    string albumName;
+    weak_ptr<Album> albumPtr;
 
 public:
-    Song(string tit, string art, int dur, string album)
-        : AudioStream(tit, art, dur), albumName(album) {}
+    Song(string tit, string art, int dur)
+        : AudioStream(tit, art, dur){}
+    ~Song() {
+        cout << " Destroying Song " << getTitle() << endl;
+    }
 
-void play() const override {
-    cout << "Now playing Song: "
-         << getTitle()
-         << " by "
-         << getArtist()
-         << " [Album: "
-         << albumName
-         << "]"
-         << endl;
-    playBuffer();
+void setAlbum(shared_ptr<Album> album) {
+    albumPtr = album;
 }
+
+void play() const override; 
+
 };

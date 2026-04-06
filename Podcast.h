@@ -16,6 +16,9 @@ public:
         : AudioStream(tit, art, dur),
           episodeNumber(epNum),
           guest(guestName) {}
+    ~Podcast() {
+        cout << " Destroying Podcast " << getTitle() << endl;
+    }
 
 void play() const override {
     cout << "Now playing Podcast: "

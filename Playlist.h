@@ -5,12 +5,13 @@
 #include <stdexcept>
 #include "Song.h"
 #include "Podcast.h"
+#include <memory>
 
 using namespace std;
 
 class Playlist {
-private:
-    AudioStream* m_list[100];
+protected:
+    shared_ptr<AudioStream> m_list[100];
     int m_count;
 
 public:
@@ -20,16 +21,14 @@ public:
         }
     }
 
-    ~Playlist() {
-        for (int i = 0; i < m_count; i++) {
-            delete m_list[i];
-        }
+    virtual ~Playlist() {
+        cout << "Destroying the Playlist : " << endl;
     }
 
-    void addSong(string title, string artist, int duration, string album) {
+    virtual void addSong(string title, string artist, int duration, string album) {
         cout << "Adding Song: " << title << "..." << endl;
         try {
-            addStream(new Song(title, artist, duration, album));
+            addStream(make_shared<Song>(title, artist, duration));
         } catch (runtime_error& e){
             cout << "  [Playlist]: Failed to add " << title << " -> " << e.what() << endl;
         }
@@ -38,13 +37,13 @@ public:
     void addPodcast(string title, string host, int duration, int episode, string guest) {
         cout << "Adding Podcast: " << title << "..." << endl;
         try {
-            addStream(new Podcast(title, host, duration, episode, guest));
+            addStream(make_shared<Podcast>(title, host, duration, episode, guest));
         } catch (runtime_error& e){
             cout << "  [Playlist]: Failed to add " << title << " -> " << e.what() << endl;
         }
     }
 
-    void addStream(AudioStream* s) {
+    void addStream(shared_ptr<AudioStream> s) {
         if (m_count < 100) {
             m_list[m_count] = s;
             m_count++;
@@ -74,7 +73,7 @@ public:
             throw range_error("RANGE ERROR: Invalid swap values " + to_string(index1) + ", " + to_string(index2));
         }
 
-        AudioStream* temp = m_list[index1];
+        shared_ptr<AudioStream> temp = m_list[index1];
         m_list[index1] = m_list[index2];
         m_list[index2] = temp;
     }
